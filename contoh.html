@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="jquery-3.5.1.js"></script>
+        <title>Nongkrong Sadja</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Pesan Nongkrong Sadja</h1>
+            </header>
+            <main>
+            <div class="kolom-utama">
+                <h1>Pesan</h1>
+                <table>
+                    <tr>
+                        <td><label for="id_pembeli">ID Pembeli</label></td>
+                        <td><input type="text" id="id_pembeli" name="id_pembeli" required></td>
+                        
+                    </tr>
+                    <tr>
+                        <td><label for="nama_pembeli">Nama Pembeli</label></td>
+                        <td> <input type="text" id="nama_pembeli" name="nama_pembeli" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="status_pembeli">Status Pembeli</label></td>
+                        <td><input type="radio" id="status_pembeli" name="status_pembeli" value="Member" required>&nbsp;<label>Member</label>
+                            <input type="radio" id="status_pembeli" name="status_pembeli" value="Non Member" required>&nbsp; <label>Non Member</label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="nama_makanan">Nama Makanan</label></td>
+                        <td>
+                            <select id="nama_makanan" name="nama_makanan">
+                                <option value="pentol">Mie + esteh (Rp. 15000/porsi)</option>
+                                <option value="bakso">Bakso + esteh (Rp. 15000/porsi)</option>
+                                <option value="cilok">joshua (Rp. 5000/gelas)</option>
+                                <option value="salome">kopi (Rp. 5000/gelas)</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="jumlah">Jumlah</label></td>
+                        <td><input type="number" id="jumlah" name="jumlah" required></td>
+                    </tr>
+                    <tr>
+                        <td><button type="submit" id="submit" name="submit" class="button" onclick="form_process()">Submit</button></td>
+                        <td colspan="5"><div style="color: white;" id="hasil_submit"></div></td>
+                    </tr>
+                </table>
+            </div>
+            </main>
+            <nav>
+            <div class="sidebar-satu">
+                <h1>MENU</h1>
+                <ul>
+                    <h2><li><a href="Hal1.html">Dashboard</a></li>
+                    <li><a href="Hal2.html">Profile</a></li>
+                    <li><a href="Hal3.html">Tentang</a></li>
+                    <li><a href="Hal4.html">Pesanan</a></li></h2>
+                </ul>
+            </div>
+        </nav>
+        </div>
+        <script>
+            var menu = ["mie + esteh", "bakso + esteh", "joshua", "kopi"];
+            
+            function form_process() {
+                var harga_makanan = 0;
+                var diskon = 0;
+                var id_pembeli = document.getElementById('id_pembeli').value;
+                var nama_pembeli= document.getElementById('nama_pembeli').value;
+                var status_pembeli = document.querySelector('input[name = status_pembeli]:checked').value;
+                var nama_makanan = document.getElementById('nama_makanan').value;
+                var jumlah = document.getElementById('jumlah').value;
+
+                if (nama_makanan == "mie + esteh") {
+                    harga_makanan = 15.000;
+                } else if (nama_makanan == "bakso + esteh") {
+                    harga_makanan = 10.000;
+                } else if (nama_makanan == "joshua") {
+                    harga_makanan = 5.000;
+                } else if(nama_makanan == "kopi"){
+                    harga_makanan = 5.000;
+                }
+
+                if (status_pembeli == 'Member') {
+                    if (jumlah == 1) {
+                        diskon = harga_makanan * 0.05;
+                    } else if (jumlah <= 3) {
+                        diskon = harga_makanan * 0.07;
+                    } else {
+                        diskon = harga_makanan * 0.1;
+                    }
+                } else if(status_pembeli == 'Non Member'){
+                    if (jumlah <= 3) {
+                        diskon = 0;
+                    } else if (jumlah <= 5) {
+                        diskon = (harga_makanan * jumlah) * 0.05;
+                    } else {
+                        diskon = harga_makanan * 0.05;
+                    }
+                }
+
+                total = (harga_makanan * jumlah) - diskon;
+                var par = document.createElement("h4")
+                var node = document.createTextNode(
+                    "TOTAL BAYAR : " + total
+                )
+                par.appendChild(node)
+                document.getElementById("hasil_submit").appendChild(par)
+            }
+        </script>
+    </body>
+</html>
